@@ -8,7 +8,6 @@ import osoba.Klient;
 import java.io.*;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.Scanner;
 
 abstract public class Pojazd {
     protected String marka;
@@ -73,5 +72,69 @@ abstract public class Pojazd {
         }catch (Exception e){
             return new ArrayList<>();
         }
+    }
+
+    public String getMarka() {
+        return marka;
+    }
+
+    public void setMarka(String marka) {
+        this.marka = marka;
+    }
+
+    public String getModel() {
+        return model;
+    }
+
+    public void setModel(String model) {
+        this.model = model;
+    }
+
+    public int getRokProdukcji() {
+        return rokProdukcji;
+    }
+
+    public void setRokProdukcji(int rokProdukcji) {
+        this.rokProdukcji = rokProdukcji;
+    }
+
+    public String getKolor() {
+        return kolor;
+    }
+
+    public void setKolor(String kolor) {
+        this.kolor = kolor;
+    }
+
+    public double getWaga() {
+        return waga;
+    }
+
+    public void setWaga(double waga) {
+        this.waga = waga;
+    }
+
+    public double getCenaBazowa() {
+        return cenaBazowa;
+    }
+
+    public void setCenaBazowa(double cenaBazowa) {
+        this.cenaBazowa = cenaBazowa;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getWymaganeUprawnienia() {
+        return wymaganeUprawnienia;
+    }
+
+    public void setWymaganeUprawnienia(String wymaganeUprawnienia) {
+        this.wymaganeUprawnienia = wymaganeUprawnienia;
     }
 }
