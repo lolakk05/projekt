@@ -1,0 +1,30 @@
+[
+  {
+    "numerPrawaJazdy": "2137",
+    "kategoria": [
+      "A",
+      "B"
+    ],
+    "wypozyczenia": [],
+    "saldo": 0.0,
+    "imie": "Jakub",
+    "nazwisko": "Dłużak",
+    "pesel": "06302756234",
+    "wiek": 19,
+    "email": "tomziom731@gmail.com",
+    "haslo": "Niggas69",
+    "telefon": "112"
+  },
+  {
+    "kategoria": [],
+    "wypozyczenia": [],
+    "saldo": 0.0,
+    "imie": "Karol",
+    "nazwisko": "Stolarczyk",
+    "pesel": "05320821376",
+    "wiek": 20,
+    "email": "verstappengoat2137@gmail.com",
+    "haslo": "Maxiu6969",
+    "telefon": "999"
+  }
+]
