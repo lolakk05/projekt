@@ -1,17 +1,72 @@
 package wypozyczenie;
 
+import pojazd.Pojazd;
+import strategia.StrategiaCenowa;
+
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 public class Wypozyczenie {
+    private Pojazd pojazd;
     private Date dataRozpoczecia;
     private Date dataZakonczenia;
     private double kosztKoncowy;
-    private int strategia;
+    private StrategiaCenowa strategia;
 
-    public Wypozyczenie(Date dataRozpoczecia, Date dataZakonczenia, double kosztKoncowy, int strategia) {
+    public Wypozyczenie(Pojazd pojazd, Date dataRozpoczecia, Date dataZakonczenia, StrategiaCenowa strategia) {
+        this.pojazd = pojazd;
         this.dataRozpoczecia = dataRozpoczecia;
         this.dataZakonczenia = dataZakonczenia;
-        this.kosztKoncowy = kosztKoncowy;
         this.strategia = strategia;
+
+        przeliczKoszt(); // liczenie kosztu dla calego wypozyczenia
+    }
+
+    public void przeliczKoszt() {
+        if (strategia != null && dataRozpoczecia != null && dataZakonczenia != null) {
+
+            long diffInMillies = Math.abs(dataZakonczenia.getTime() - dataRozpoczecia.getTime());
+
+            long diffInMinutes = TimeUnit.MINUTES.convert(diffInMillies, TimeUnit.MILLISECONDS);
+
+            this.kosztKoncowy = strategia.wyliczKoszt(diffInMinutes, pojazd.getCenaBazowa());
+        }
+    }
+
+    public Date getDataRozpoczecia() {
+        return dataRozpoczecia;
+    }
+
+    public void setDataRozpoczecia(Date dataRozpoczecia) {
+        this.dataRozpoczecia = dataRozpoczecia;
+    }
+
+    public Date getDataZakonczenia() {
+        return dataZakonczenia;
+    }
+
+    public void setDataZakonczenia(Date dataZakonczenia) {
+        this.dataZakonczenia = dataZakonczenia;
+    }
+
+    public double getKosztKoncowy() {
+        return kosztKoncowy;
+    }
+
+    public void setKosztKoncowy(double kosztKoncowy) {
+        this.kosztKoncowy = kosztKoncowy;
+    }
+
+    public StrategiaCenowa getStrategia() {
+        return strategia;
+    }
+
+    public void setStrategia(StrategiaCenowa strategia) {
+        this.strategia = strategia;
+    }
+
+    @Override
+    public String toString() {
+        return "Wypożyczenie: " + pojazd.getMarka() + " " + pojazd.getModel() + " | Koszt: " + String.format("%.2f", kosztKoncowy) + " PLN";
     }
 }

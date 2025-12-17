@@ -2,12 +2,18 @@ import osoba.*;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import pojazd.HulajnogaElektryczna;
 import pojazd.Pojazd;
+import pojazd.SamochodOsobowy;
+import strategia.StrategiaGodzinowa;
+import strategia.StrategiaMinutowa;
+import wypozyczenie.Wypozyczenie;
 
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 
