@@ -2,6 +2,11 @@ package frontend;
 
 import app.Main;
 import pojazd.Pojazd;
+import pojazd.Rower;
+import strategia.StrategiaCenowa;
+import strategia.StrategiaDlugoterminowa;
+import strategia.StrategiaDobowa;
+import strategia.StrategiaMinutowa;
 
 import javax.swing.*;
 import java.awt.*;
@@ -92,12 +97,30 @@ public class VehicleDetailPanel extends JPanel {
                 return;
             }
 
-            long diffInDays = TimeUnit.DAYS.convert(endDate.getTime() - startDate.getTime(), TimeUnit.MILLISECONDS);
+            long diffInMillies = Math.abs(endDate.getTime() - startDate.getTime());
+            long diffInMinutes = TimeUnit.MINUTES.convert(diffInMillies, TimeUnit.MILLISECONDS);
 
-            if(diffInDays == 0) diffInDays = 1;
+            if (diffInMinutes == 0) diffInMinutes = 1;
 
-            double price = diffInDays * currentVehicle.getCenaBazowa();
+            StrategiaCenowa strategia;
+
+            if (currentVehicle instanceof Rower) {
+                strategia = new StrategiaMinutowa();
+            } else {
+
+                long tydzienWMinutach = 7 * 24 * 60; 
+
+                if (diffInMinutes > tydzienWMinutach) {
+                    strategia = new StrategiaDlugoterminowa(0.20); // 20% rabatu
+                } else {
+                    strategia = new StrategiaDobowa();
+                }
+            }
+
+            double price = strategia.wyliczKoszt(diffInMinutes, currentVehicle.getCenaBazowa());
+
             priceLabel.setText(String.format("%.2f", price));
+
         } catch (ParseException e) {
             JOptionPane.showMessageDialog(this, "Błędny format daty! Użyj formatu DD/MM/RRRR");
         }
