@@ -19,6 +19,8 @@ import static pojazd.Pojazd.loadVehicles;
 import static serialization.UserSerialize.*;
 import static serialization.WorkerSerialize.loadWorkers;
 
+import org.springframework.security.crypto.bcrypt.BCrypt;
+
 public class Main {
     public static ArrayList<Klient> clients = loadClients();
     public static ArrayList<Pojazd> vehicles = loadVehicles();
@@ -27,7 +29,7 @@ public class Main {
 
     public static boolean login(String email, String password) {
         for (Klient client : clients) {
-            if (client.getEmail().equals(email) && client.getHaslo().equals(password)) {
+            if (client.getEmail().equals(email) && BCrypt.checkpw(password, client.getHaslo())) {
                 Session.login(client);
                 return true;
             }
@@ -45,7 +47,7 @@ public class Main {
                     throw new Exception("Puste pole");
                 }
             } else if((boolean) user[7]) {
-                if(((String) obj).isEmpty() && (index != 7)){
+                if(obj instanceof String && ((String) obj).isEmpty()){
                     JOptionPane.showMessageDialog(null, "Żadne pole nie może pozostać puste");
                     throw new Exception("Puste pole");
                 }
@@ -90,7 +92,11 @@ public class Main {
             throw new Exception("Niepoprawny numer telefonu!");
         }
 
-        Klient newClient = new Klient((String) user[0], (String) user[1], (String) user[2], age, (String) user[4], (String) user[5], (String) user[6], (String) user[8], (List<String>) user[9], 0);
+        String password = (String) user[5];
+        String salt = BCrypt.gensalt();
+        String hashedPassword = BCrypt.hashpw(password, salt);
+
+        Klient newClient = new Klient((String) user[0], (String) user[1], (String) user[2], age, (String) user[4], hashedPassword, (String) user[6], (String) user[8], (List<String>) user[9], 0);
 
         clients.add(newClient);
 
