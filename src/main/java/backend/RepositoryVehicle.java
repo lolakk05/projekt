@@ -10,9 +10,7 @@ public class RepositoryVehicle {
 
     public RepositoryVehicle() {
         this.vehicles = new ArrayList<>();
-        for(Pojazd poj : vehicles) {
-            System.out.println(poj);
-        }
+
         load();
     }
 
@@ -21,7 +19,7 @@ public class RepositoryVehicle {
         try(ObjectInputStream ois = new ObjectInputStream(new FileInputStream("data/vehicles.ser"))){
             int rozmiar = ois.readInt();
             for(int i = 0; i < rozmiar; i++){
-                vehicles.add((Pojazd) ois.readObject());
+                this.vehicles.add((Pojazd) ois.readObject());
             }
         }catch (Exception e){
             e.printStackTrace();
