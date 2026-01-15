@@ -10,7 +10,9 @@ public class RepositoryVehicle {
 
     public RepositoryVehicle() {
         this.vehicles = new ArrayList<>();
-
+        for(Pojazd poj : vehicles) {
+            System.out.println(poj);
+        }
         load();
     }
 

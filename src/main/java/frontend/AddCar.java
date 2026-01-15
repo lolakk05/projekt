@@ -199,60 +199,8 @@ public class AddCar extends JPanel {
         addButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 String[] car = {marka.getText(), model.getText(), rokProdukcji.getText(), kolor.getText(), waga.getText(), cenaBazowa.getText(), wymaganeUprawnienia.getText(), vin.getText(), nrRejestracyjny.getText(), pojemnoscSilnika.getText(), liczbaMiejsc.getText(), paliwo.getText(), nadwozie.getText(), iloscDrzwi.getText()};
-                try {
-                    czyPuste(car);
 
-                    int int_rokProdukcji;
-                    try {
-                        int_rokProdukcji = Integer.parseInt(rokProdukcji.getText());
-                    } catch(Exception ex) {
-                        JOptionPane.showMessageDialog(null, "Rok produkcji musi być liczbą");
-                        throw new Exception("Rok produkcji musi być liczbą");
-                    }
 
-                    double d_waga;
-                    try {
-                        d_waga = Double.parseDouble(waga.getText());
-                    } catch(Exception ex) {
-                        JOptionPane.showMessageDialog(null, "Waga musi być liczbą z przecinkiem");
-                        throw new Exception("Waga zły format");
-                    }
-
-                    double d_cena;
-                    try {
-                        d_cena = Double.parseDouble(cenaBazowa.getText());
-                    } catch(Exception ex) {
-                        JOptionPane.showMessageDialog(null, "Cena bazowa musi być liczbą z przecinkiem");
-                        throw new Exception("Cena bazowa zły format");
-                    }
-
-                    double d_pojemnoscSilnika;
-                    try {
-                        d_pojemnoscSilnika = Double.parseDouble(pojemnoscSilnika.getText());
-                    } catch(Exception ex) {
-                        JOptionPane.showMessageDialog(null, "Pojemność silnika musi być liczbą z przecinkiem");
-                        throw new Exception("Pojemność silnika zły format");
-                    }
-
-                    int int_liczbaMiejsc;
-                    try {
-                        int_liczbaMiejsc = Integer.parseInt(liczbaMiejsc.getText());
-                    } catch(Exception ex) {
-                        JOptionPane.showMessageDialog(null, "Liczba miejsc musi być liczbą");
-                        throw new Exception("Liczba miejsc musi być liczbą");
-                    }
-
-                    int int_iloscDrzwi;
-                    try {
-                        int_iloscDrzwi = Integer.parseInt(iloscDrzwi.getText());
-                    } catch(Exception ex) {
-                        JOptionPane.showMessageDialog(null, "Ilość drzwi musi być liczbą");
-                        throw new Exception("Ilość drzwi musi być liczbą");
-                    }
-
-                } catch(Exception ex) {
-                    throw new RuntimeException();
-                }
 
                 marka.setText(null);
                 model.setText(null);
@@ -281,13 +229,5 @@ public class AddCar extends JPanel {
 
         revalidate();
         repaint();
-    }
-
-    public static void czyPuste(String[] lista) throws Exception {
-        for(String elem : lista){
-            if(elem.isEmpty()) {
-                throw new Exception("Żadne pole nie może być puste");
-            }
-        }
     }
 }
