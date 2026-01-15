@@ -47,10 +47,10 @@ public class MainFrame extends JFrame{
         AddVehiclePanel addVehiclePanel = new AddVehiclePanel(this);
         AddWorkerPanel addWorkerPanel = new AddWorkerPanel(this);
         AddCar addCarPanel = new AddCar(this, serviceVehicle);
-        AddMotorcycle addMotorcyclePanel = new AddMotorcycle(this);
-        AddTir addTirPanel = new AddTir(this);
-        AddScooter addScooterPanel = new AddScooter(this);
-        AddBike addBikePanel = new AddBike(this);
+        AddMotorcycle addMotorcyclePanel = new AddMotorcycle(this, serviceVehicle);
+        AddTir addTirPanel = new AddTir(this, serviceVehicle);
+        AddScooter addScooterPanel = new AddScooter(this, serviceVehicle);
+        AddBike addBikePanel = new AddBike(this, serviceVehicle);
         vehicleListPanel = new VehicleListPanel(this, serviceVehicle);
         vehicleDetailPanel = new VehicleDetailPanel(this, serviceVehicle);
         RemoveVehiclePanel removeVehiclePanel = new RemoveVehiclePanel(this);

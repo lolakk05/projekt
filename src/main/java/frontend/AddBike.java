@@ -1,5 +1,6 @@
 package frontend;
 
+import backend.ServiceVehicle;
 import pojazd.Pojazd;
 import pojazd.Rower;
 
@@ -12,10 +13,12 @@ import java.io.*;
 
 public class AddBike extends JPanel {
     private MainFrame mainFrame;
+    private ServiceVehicle serviceVehicle;
     private int liczba_stworzonych = 0;
 
-    public AddBike(MainFrame mainFrame) {
+    public AddBike(MainFrame mainFrame, ServiceVehicle serviceVehicle) {
         this.mainFrame = mainFrame;
+        this.serviceVehicle = serviceVehicle;
         setLayout(new FlowLayout());
 
         JPanel optionsPanel = new JPanel();
@@ -180,45 +183,9 @@ public class AddBike extends JPanel {
         JButton addButton = new JButton("Dodaj");
         addButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                String[] car = {marka.getText(), model.getText(), rokProdukcji.getText(), kolor.getText(), waga.getText(), cenaBazowa.getText(), wymaganeUprawnienia.getText(), rozmiarKol.getText(), typ.getText()};
-                try {
-                    czyPuste(car);
+                String[] bike = {marka.getText(), model.getText(), rokProdukcji.getText(), kolor.getText(), waga.getText(), cenaBazowa.getText(), wymaganeUprawnienia.getText(), rozmiarKol.getText(), typ.getText()};
 
-                    int int_rokProdukcji;
-                    try {
-                        int_rokProdukcji = Integer.parseInt(rokProdukcji.getText());
-                    } catch(Exception ex) {
-                        JOptionPane.showMessageDialog(null, "Rok produkcji musi być liczbą");
-                        throw new Exception("Rok produkcji musi być liczbą");
-                    }
-
-                    double d_waga;
-                    try {
-                        d_waga = Double.parseDouble(waga.getText());
-                    } catch(Exception ex) {
-                        JOptionPane.showMessageDialog(null, "Waga musi być liczbą z przecinkiem");
-                        throw new Exception("Waga zły format");
-                    }
-
-                    double d_cena;
-                    try {
-                        d_cena = Double.parseDouble(cenaBazowa.getText());
-                    } catch(Exception ex) {
-                        JOptionPane.showMessageDialog(null, "Cena bazowa musi być liczbą z przecinkiem");
-                        throw new Exception("Cena bazowa zły format");
-                    }
-
-                    int int_rozmiarKol;
-                    try {
-                        int_rozmiarKol = Integer.parseInt(rozmiarKol.getText());
-                    } catch(Exception ex) {
-                        JOptionPane.showMessageDialog(null, "Rozmiar kół musi być liczbą");
-                        throw new Exception("Rozmiar kół musi być liczbą");
-                    }
-
-                } catch(Exception ex) {
-                    throw new RuntimeException();
-                }
+                serviceVehicle.addBike(bike);
 
                 marka.setText(null);
                 model.setText(null);
