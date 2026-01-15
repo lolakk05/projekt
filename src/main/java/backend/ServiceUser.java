@@ -1,29 +1,29 @@
-package app;
+package backend;
 
-import frontend.MainFrame;
-import osoba.*;
-
-import pojazd.Pojazd;
+import org.springframework.security.crypto.bcrypt.BCrypt;
+import osoba.EmailException;
+import osoba.Klient;
+import osoba.PeselException;
+import osoba.PhoneNumberException;
 
 import javax.swing.*;
-import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import static serialization.UserSerialize.*;
-import static serialization.VehicleSerialize.loadVehicles;
-import static serialization.WorkerSerialize.loadWorkers;
+public class ServiceUser {
+    private RepositoryUser repositoryUser;
 
-import org.springframework.security.crypto.bcrypt.BCrypt;
+    public ServiceUser() {
+        this.repositoryUser = new RepositoryUser();
+    }
 
-public class Main {
-    public static ArrayList<Klient> clients = loadClients();
-    public static ArrayList<Pojazd> vehicles = loadVehicles();
-    public static ArrayList<Serwisant> workers = loadWorkers();
+    public void clientSaveData() {
+        repositoryUser.save();
+    }
 
-
-    public static boolean login(String email, String password) {
-        for (Klient client : clients) {
+    public boolean login(String email, String password) {
+        ArrayList<Klient> result = new ArrayList<>(repositoryUser.getClients());
+        for (Klient client : result ) {
             if (client.getEmail().equals(email) && BCrypt.checkpw(password, client.getHaslo())) {
                 Session.login(client);
                 return true;
@@ -93,39 +93,8 @@ public class Main {
 
         Klient newClient = new Klient((String) user[0], (String) user[1], (String) user[2], age, (String) user[4], hashedPassword, (String) user[6], (String) user[8], (List<String>) user[9], 0);
 
-        clients.add(newClient);
-
-        try {
-            saveClients();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        repositoryUser.upload(newClient);
 
         return true;
-    }
-
-    public void saveClients() {
-        try(ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("data/clients.ser"))) {
-            oos.writeInt(clients.size());
-            for (Klient client : clients) {
-                oos.writeObject(client);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void startGUI() {
-        new MainFrame(this);
-    }
-
-    public static void main(String[] args) {
-
-        for(Pojazd pojazd : vehicles) {
-            System.out.println(pojazd.getMarka());
-        }
-        SwingUtilities.invokeLater(() -> {
-            new Main().startGUI();
-        });
     }
 }

@@ -1,10 +1,8 @@
 package frontend;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+import backend.ServiceVehicle;
 import pojazd.Motocykl;
 import pojazd.Pojazd;
-import pojazd.SamochodOsobowy;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -13,25 +11,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.*;
 
-import static app.Main.vehicles;
 
 public class AddMotorcycle extends JPanel {
     private MainFrame mainFrame;
-    private int liczba_stworzonych = 0;
+    private ServiceVehicle serviceVehicle;
 
-    public void saveVehicle() {
-        try(ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("data/vehicles.ser"))) {
-            oos.writeInt(vehicles.size());
-            for (Pojazd pojazd : vehicles) {
-                oos.writeObject(vehicles);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public AddMotorcycle(MainFrame mainFrame) {
+    public AddMotorcycle(MainFrame mainFrame, ServiceVehicle serviceVehicle) {
         this.mainFrame = mainFrame;
+        this.serviceVehicle = serviceVehicle;
         setLayout(new FlowLayout());
 
         JPanel optionsPanel = new JPanel();
@@ -216,62 +203,9 @@ public class AddMotorcycle extends JPanel {
         JButton addButton = new JButton("Dodaj");
         addButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                String[] car = {marka.getText(), model.getText(), rokProdukcji.getText(), kolor.getText(), waga.getText(), cenaBazowa.getText(), wymaganeUprawnienia.getText(), vin.getText(), nrRejestracyjny.getText(), pojemnoscSilnika.getText(), liczbaMiejsc.getText(), paliwo.getText(), "czy ma kufry", typ.getText()};
-                try {
-                    czyPuste(car);
+                String[] moto = {marka.getText(), model.getText(), rokProdukcji.getText(), kolor.getText(), waga.getText(), cenaBazowa.getText(), wymaganeUprawnienia.getText(), vin.getText(), nrRejestracyjny.getText(), pojemnoscSilnika.getText(), liczbaMiejsc.getText(), paliwo.getText(), "czy ma kufry", typ.getText()};
 
-                    int int_rokProdukcji;
-                    try {
-                        int_rokProdukcji = Integer.parseInt(rokProdukcji.getText());
-                    } catch(Exception ex) {
-                        JOptionPane.showMessageDialog(null, "Rok produkcji musi być liczbą");
-                        throw new Exception("Rok produkcji musi być liczbą");
-                    }
-
-                    double d_waga;
-                    try {
-                        d_waga = Double.parseDouble(waga.getText());
-                    } catch(Exception ex) {
-                        JOptionPane.showMessageDialog(null, "Waga musi być liczbą z przecinkiem");
-                        throw new Exception("Waga zły format");
-                    }
-
-                    double d_cena;
-                    try {
-                        d_cena = Double.parseDouble(cenaBazowa.getText());
-                    } catch(Exception ex) {
-                        JOptionPane.showMessageDialog(null, "Cena bazowa musi być liczbą z przecinkiem");
-                        throw new Exception("Cena bazowa zły format");
-                    }
-
-                    double d_pojemnoscSilnika;
-                    try {
-                        d_pojemnoscSilnika = Double.parseDouble(pojemnoscSilnika.getText());
-                    } catch(Exception ex) {
-                        JOptionPane.showMessageDialog(null, "Pojemność silnika musi być liczbą z przecinkiem");
-                        throw new Exception("Pojemność silnika zły format");
-                    }
-
-                    int int_liczbaMiejsc;
-                    try {
-                        int_liczbaMiejsc = Integer.parseInt(liczbaMiejsc.getText());
-                    } catch(Exception ex) {
-                        JOptionPane.showMessageDialog(null, "Liczba miejsc musi być liczbą");
-                        throw new Exception("Liczba miejsc musi być liczbą");
-                    }
-
-                } catch(Exception ex) {
-                    throw new RuntimeException();
-                }
-
-                boolean czyMaKufry = false;
-                if(checkBox.isSelected()) {
-                    czyMaKufry = true;
-                }
-
-                vehicles.add(new Motocykl(marka.getText(), model.getText(), Integer.parseInt(rokProdukcji.getText()), kolor.getText(), Double.parseDouble(waga.getText()), Double.parseDouble(cenaBazowa.getText()), "wolny", wymaganeUprawnienia.getText(), vin.getText(), nrRejestracyjny.getText(), Double.parseDouble(pojemnoscSilnika.getText()), Integer.parseInt(liczbaMiejsc.getText()), paliwo.getText(), czyMaKufry, typ.getText()));
-                JOptionPane.showMessageDialog(null, "Motocykl dodany pomyślnie!");
-                saveVehicle();
+                serviceVehicle.addMotorcycle(moto);
 
                 marka.setText(null);
                 model.setText(null);

@@ -1,6 +1,6 @@
 package frontend;
 
-import app.Main;
+import backend.ServiceVehicle;
 import pojazd.Pojazd;
 import pojazd.Rower;
 import strategia.StrategiaCenowa;
@@ -19,7 +19,7 @@ import java.util.concurrent.TimeUnit;
 
 public class VehicleDetailPanel extends JPanel {
     private MainFrame mainFrame;
-    private Main appLogic;
+    private ServiceVehicle serviceVehicle;
 
     private Pojazd currentVehicle;
 
@@ -32,9 +32,9 @@ public class VehicleDetailPanel extends JPanel {
     private JLabel priceLabel = new JLabel();
 
 
-    public VehicleDetailPanel(MainFrame mainFrame, Main appLogic) {
+    public VehicleDetailPanel(MainFrame mainFrame, ServiceVehicle serviceVehicle) {
         this.mainFrame = mainFrame;
-        this.appLogic = appLogic;
+        this.serviceVehicle= serviceVehicle;
 
         setLayout(new BorderLayout());
 

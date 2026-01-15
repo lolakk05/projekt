@@ -1,11 +1,8 @@
 package frontend;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+import backend.ServiceVehicle;
 import pojazd.HulajnogaElektryczna;
 import pojazd.Pojazd;
-import pojazd.Rower;
-import pojazd.SamochodOsobowy;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -14,25 +11,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.*;
 
-import static app.Main.vehicles;
-
 public class AddScooter extends JPanel {
     private MainFrame mainFrame;
-    private int liczba_stworzonych = 0;
+    private ServiceVehicle serviceVehicle;
 
-    public void saveVehicle() {
-        try(ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("data/vehicles.ser"))) {
-            oos.writeInt(vehicles.size());
-            for (Pojazd pojazd : vehicles) {
-                oos.writeObject(vehicles);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public AddScooter(MainFrame mainFrame) {
+    public AddScooter(MainFrame mainFrame, ServiceVehicle serviceVehicle) {
         this.mainFrame = mainFrame;
+        this.serviceVehicle = serviceVehicle;
         setLayout(new FlowLayout());
 
         JPanel optionsPanel = new JPanel();
@@ -201,65 +186,9 @@ public class AddScooter extends JPanel {
         JButton addButton = new JButton("Dodaj");
         addButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                String[] car = {marka.getText(), model.getText(), rokProdukcji.getText(), kolor.getText(), waga.getText(), cenaBazowa.getText(), wymaganeUprawnienia.getText(), pojemnoscBaterii.getText(), zasiegKm.getText(), maxPredkosc.getText()};
-                try {
-                    czyPuste(car);
+                String[] scooter = {marka.getText(), model.getText(), rokProdukcji.getText(), kolor.getText(), waga.getText(), cenaBazowa.getText(), wymaganeUprawnienia.getText(), pojemnoscBaterii.getText(), zasiegKm.getText(), maxPredkosc.getText()};
 
-                    int int_rokProdukcji;
-                    try {
-                        int_rokProdukcji = Integer.parseInt(rokProdukcji.getText());
-                    } catch(Exception ex) {
-                        JOptionPane.showMessageDialog(null, "Rok produkcji musi być liczbą");
-                        throw new Exception("Rok produkcji musi być liczbą");
-                    }
-
-                    double d_waga;
-                    try {
-                        d_waga = Double.parseDouble(waga.getText());
-                    } catch(Exception ex) {
-                        JOptionPane.showMessageDialog(null, "Waga musi być liczbą z przecinkiem");
-                        throw new Exception("Waga zły format");
-                    }
-
-                    double d_cena;
-                    try {
-                        d_cena = Double.parseDouble(cenaBazowa.getText());
-                    } catch(Exception ex) {
-                        JOptionPane.showMessageDialog(null, "Cena bazowa musi być liczbą z przecinkiem");
-                        throw new Exception("Cena bazowa zły format");
-                    }
-
-                    int int_pojemnoscBaterii;
-                    try {
-                        int_pojemnoscBaterii = Integer.parseInt(pojemnoscBaterii.getText());
-                    } catch(Exception ex) {
-                        JOptionPane.showMessageDialog(null, "Pojemność baterii musi być liczbą");
-                        throw new Exception("Pojemność baterii musi być liczbą");
-                    }
-
-                    int int_zasiegKm;
-                    try {
-                        int_zasiegKm = Integer.parseInt(zasiegKm.getText());
-                    } catch(Exception ex) {
-                        JOptionPane.showMessageDialog(null, "Zasięg musi być liczbą");
-                        throw new Exception("Zasięg musi być liczbą");
-                    }
-
-                    double d_maxPredkosc;
-                    try {
-                        d_maxPredkosc = Double.parseDouble(maxPredkosc.getText());
-                    } catch(Exception ex) {
-                        JOptionPane.showMessageDialog(null, "Maksymalna prędkość musi być liczbą z przecinkiem");
-                        throw new Exception("Max prędkość zły format");
-                    }
-
-                } catch(Exception ex) {
-                    throw new RuntimeException();
-                }
-
-                vehicles.add(new HulajnogaElektryczna(marka.getText(), model.getText(), Integer.parseInt(rokProdukcji.getText()), kolor.getText(), Double.parseDouble(waga.getText()), Double.parseDouble(cenaBazowa.getText()), "wolny", wymaganeUprawnienia.getText(), Integer.parseInt(pojemnoscBaterii.getText()), Integer.parseInt(zasiegKm.getText()), Double.parseDouble(maxPredkosc.getText())));
-                JOptionPane.showMessageDialog(null, "Hulajnoga dodana pomyślnie!");
-                saveVehicle();
+                serviceVehicle.addScooter(scooter);
 
                 marka.setText(null);
                 model.setText(null);

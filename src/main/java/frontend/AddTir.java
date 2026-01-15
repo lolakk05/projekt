@@ -1,11 +1,8 @@
 package frontend;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+import backend.ServiceVehicle;
 import pojazd.Ciezarowka;
 import pojazd.Pojazd;
-import pojazd.SamochodOsobowy;
-import serialization.VehicleSerialize;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -14,25 +11,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.*;
 
-import static app.Main.vehicles;
 
 public class AddTir extends JPanel {
     private MainFrame mainFrame;
-    private int liczba_stworzonych = 0;
+    private ServiceVehicle serviceVehicle;
 
-    public void saveVehicle() {
-        try(ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("data/vehicles.ser"))) {
-            oos.writeInt(vehicles.size());
-            for (Pojazd pojazd : vehicles) {
-                oos.writeObject(vehicles);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public AddTir(MainFrame mainFrame) {
+    public AddTir(MainFrame mainFrame, ServiceVehicle serviceVehicle) {
         this.mainFrame = mainFrame;
+        this.serviceVehicle = serviceVehicle;
         setLayout(new FlowLayout());
 
         JPanel optionsPanel = new JPanel();
@@ -216,73 +202,9 @@ public class AddTir extends JPanel {
         JButton addButton = new JButton("Dodaj");
         addButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                String[] car = {marka.getText(), model.getText(), rokProdukcji.getText(), kolor.getText(), waga.getText(), cenaBazowa.getText(), wymaganeUprawnienia.getText(), vin.getText(), nrRejestracyjny.getText(), pojemnoscSilnika.getText(), liczbaMiejsc.getText(), paliwo.getText(), ladownosc.getText(), iloscOsi.getText()};
-                try {
-                    czyPuste(car);
+                String[] truck = {marka.getText(), model.getText(), rokProdukcji.getText(), kolor.getText(), waga.getText(), cenaBazowa.getText(), wymaganeUprawnienia.getText(), vin.getText(), nrRejestracyjny.getText(), pojemnoscSilnika.getText(), liczbaMiejsc.getText(), paliwo.getText(), ladownosc.getText(), iloscOsi.getText()};
 
-                    int int_rokProdukcji;
-                    try {
-                        int_rokProdukcji = Integer.parseInt(rokProdukcji.getText());
-                    } catch(Exception ex) {
-                        JOptionPane.showMessageDialog(null, "Rok produkcji musi być liczbą");
-                        throw new Exception("Rok produkcji musi być liczbą");
-                    }
-
-                    double d_waga;
-                    try {
-                        d_waga = Double.parseDouble(waga.getText());
-                    } catch(Exception ex) {
-                        JOptionPane.showMessageDialog(null, "Waga musi być liczbą z przecinkiem");
-                        throw new Exception("Waga zły format");
-                    }
-
-                    double d_cena;
-                    try {
-                        d_cena = Double.parseDouble(cenaBazowa.getText());
-                    } catch(Exception ex) {
-                        JOptionPane.showMessageDialog(null, "Cena bazowa musi być liczbą z przecinkiem");
-                        throw new Exception("Cena bazowa zły format");
-                    }
-
-                    double d_pojemnoscSilnika;
-                    try {
-                        d_pojemnoscSilnika = Double.parseDouble(pojemnoscSilnika.getText());
-                    } catch(Exception ex) {
-                        JOptionPane.showMessageDialog(null, "Pojemność silnika musi być liczbą z przecinkiem");
-                        throw new Exception("Pojemność silnika zły format");
-                    }
-
-                    int int_liczbaMiejsc;
-                    try {
-                        int_liczbaMiejsc = Integer.parseInt(liczbaMiejsc.getText());
-                    } catch(Exception ex) {
-                        JOptionPane.showMessageDialog(null, "Liczba miejsc musi być liczbą");
-                        throw new Exception("Liczba miejsc musi być liczbą");
-                    }
-
-                    double d_ladownosc;
-                    try {
-                        d_ladownosc = Double.parseDouble(ladownosc.getText());
-                    } catch(Exception ex) {
-                        JOptionPane.showMessageDialog(null, "Ładowność musi być liczbą z przecinkiem");
-                        throw new Exception("Pojemność silnika zły format");
-                    }
-
-                    int int_iloscOsi;
-                    try {
-                        int_iloscOsi = Integer.parseInt(iloscOsi.getText());
-                    } catch(Exception ex) {
-                        JOptionPane.showMessageDialog(null, "Ilość osi musi być liczbą");
-                        throw new Exception("Ilość drzwi musi być liczbą");
-                    }
-
-                } catch(Exception ex) {
-                    throw new RuntimeException();
-                }
-
-                vehicles.add(new Ciezarowka(marka.getText(), model.getText(), Integer.parseInt(rokProdukcji.getText()), kolor.getText(), Double.parseDouble(waga.getText()), Double.parseDouble(cenaBazowa.getText()), "wolny", wymaganeUprawnienia.getText(), vin.getText(), nrRejestracyjny.getText(), Double.parseDouble(pojemnoscSilnika.getText()), Integer.parseInt(liczbaMiejsc.getText()), paliwo.getText(), Double.parseDouble(ladownosc.getText()), Integer.parseInt(iloscOsi.getText())));
-                JOptionPane.showMessageDialog(null, "Ciężarówka dodana pomyślnie!");
-                saveVehicle();
+                serviceVehicle.addTir(truck);
 
                 marka.setText(null);
                 model.setText(null);
