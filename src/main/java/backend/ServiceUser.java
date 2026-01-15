@@ -17,6 +17,10 @@ public class ServiceUser {
         this.repositoryUser = new RepositoryUser();
     }
 
+    public void clientSaveData() {
+        repositoryUser.save();
+    }
+
     public boolean login(String email, String password) {
         ArrayList<Klient> result = new ArrayList<>(repositoryUser.getClients());
         for (Klient client : result ) {

@@ -42,7 +42,7 @@ public class UserPanel extends JPanel {
                 int sum = Integer.parseInt(balanceField.getText());
                 currentClient.setSaldo(sum);
                 getUserData();
-
+                serviceUser.clientSaveData();
             }
         });
 

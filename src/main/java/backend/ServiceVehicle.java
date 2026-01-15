@@ -6,6 +6,6 @@ public class ServiceVehicle {
     private RepositoryVehicle repositoryVehicle;
 
     public ServiceVehicle() {
-        this.repositoryVehicle = new  RepositoryVehicle();
+        this.repositoryVehicle = new RepositoryVehicle();
     }
 }
