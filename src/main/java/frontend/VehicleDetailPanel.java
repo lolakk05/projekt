@@ -3,6 +3,11 @@ package frontend;
 import backend.ServiceRental;
 import backend.ServiceVehicle;
 import pojazd.Pojazd;
+import pojazd.Rower;
+import strategia.StrategiaCenowa;
+import strategia.StrategiaDlugoterminowa;
+import strategia.StrategiaDobowa;
+import strategia.StrategiaMinutowa;
 
 import javax.swing.*;
 import java.awt.*;
