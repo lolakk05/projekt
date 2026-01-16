@@ -109,6 +109,10 @@ public class VehicleDetailPanel extends JPanel {
         }
     }
 
+    private void function() {
+        // Placeholder for additional functionality if needed in the future
+    }
+
 
     private void rentVehicle() {
         if (serviceRental.getLastStrategy() == null) {
