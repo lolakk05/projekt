@@ -85,9 +85,9 @@ public class ServiceRental {
         if (days > 10) {
             return new StrategiaDlugoterminowa();
         } else if (days >= 1) {
-            return new StrategiaGodzinowa();
+            return new StrategiaDobowa();
         } else if (hours >= 1) {
-            return new StrategiaGodzinowa();
+            return new StrategiaDobowa();
         } else {
             return new StrategiaMinutowa();
         }
