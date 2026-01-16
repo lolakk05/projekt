@@ -1,5 +1,6 @@
 package frontend;
 
+import backend.ServiceRental;
 import backend.ServiceVehicle;
 import pojazd.Pojazd;
 
@@ -10,11 +11,11 @@ import java.awt.event.ActionListener;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.concurrent.TimeUnit;
 
 public class VehicleDetailPanel extends JPanel {
     private MainFrame mainFrame;
     private ServiceVehicle serviceVehicle;
+    private ServiceRental serviceRental;
 
     private Pojazd currentVehicle;
 
@@ -27,9 +28,10 @@ public class VehicleDetailPanel extends JPanel {
     private JLabel priceLabel = new JLabel();
 
 
-    public VehicleDetailPanel(MainFrame mainFrame, ServiceVehicle serviceVehicle) {
+    public VehicleDetailPanel(MainFrame mainFrame, ServiceVehicle serviceVehicle, ServiceRental serviceRental) {
         this.mainFrame = mainFrame;
         this.serviceVehicle= serviceVehicle;
+        this.serviceRental = serviceRental;
 
         setLayout(new BorderLayout());
 
@@ -76,11 +78,18 @@ public class VehicleDetailPanel extends JPanel {
         rentPanel.add(priceLabel);
         add(rentPanel, BorderLayout.SOUTH);
 
+        JButton rentButton = new JButton("Wypożycz");
+        rentButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                rentVehicle();
+            }
+        });
+        rentPanel.add(rentButton);
+
     }
 
     public void calculatePrice() {
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-
         sdf.setLenient(false);
 
         try {
@@ -92,15 +101,33 @@ public class VehicleDetailPanel extends JPanel {
                 return;
             }
 
-            long diffInDays = TimeUnit.DAYS.convert(endDate.getTime() - startDate.getTime(), TimeUnit.MILLISECONDS);
-
-            if(diffInDays == 0) diffInDays = 1;
-
-            double price = diffInDays * currentVehicle.getCenaBazowa();
-            priceLabel.setText(String.format("%.2f", price));
+            serviceRental.calculateRental(currentVehicle, startDate, endDate);
+            
+            priceLabel.setText(String.format("%.2f PLN", serviceRental.getLastPrice()));
         } catch (ParseException e) {
             JOptionPane.showMessageDialog(this, "Błędny format daty! Użyj formatu DD/MM/RRRR");
         }
+    }
+
+
+    private void rentVehicle() {
+        if (serviceRental.getLastStrategy() == null) {
+            JOptionPane.showMessageDialog(this, "Najpierw oblicz cenę!");
+            return;
+        }
+
+        SimpleDateFormat sdfForService = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        String dateStartFormatted = sdfForService.format(serviceRental.getLastStartDate());
+        String dateEndFormatted = sdfForService.format(serviceRental.getLastEndDate());
+        
+        serviceRental.rent(currentVehicle, dateStartFormatted, dateEndFormatted, serviceRental.getLastStrategy());
+        
+        JOptionPane.showMessageDialog(this, "Pojazd został wypożyczony!");
+        
+        serviceRental.clearCalculation();
+        priceLabel.setText("");
+        
+        mainFrame.ChangeCard("MAIN");
     }
 
     public void getVehicle(Pojazd P) {
