@@ -166,16 +166,18 @@ public class UserPanel extends JPanel {
                 JPanel actionPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
                 actionPanel.setOpaque(false);
 
-                JButton btnReturn = new JButton("Zwróć pojazd");
-                btnReturn.setPreferredSize(new Dimension(120, 35));
-                btnReturn.addActionListener(new ActionListener() {
-                    public void actionPerformed(ActionEvent e) {
-                        serviceRental.returnRental(r);
-                        serviceRental.getRepositoryRental().save();
-                        refreshRentalList();
-                    }
-                });
-                actionPanel.add(btnReturn);
+                if (r.getStatus() != Status.ZAKONCZONE && r.getStatus() != Status.ANULOWANE) {
+                    JButton btnReturn = new JButton("Zwróć pojazd");
+                    btnReturn.setPreferredSize(new Dimension(120, 35));
+                    btnReturn.addActionListener(new ActionListener() {
+                        public void actionPerformed(ActionEvent e) {
+                            serviceRental.returnRental(r);
+                            serviceRental.getRepositoryRental().save();
+                            refreshRentalList();
+                        }
+                    });
+                    actionPanel.add(btnReturn);
+                }
 
                 if (r.getStatus() == Status.AKTYWNE) {
                     JButton btnRepair = new JButton("Zgłoś naprawę");
