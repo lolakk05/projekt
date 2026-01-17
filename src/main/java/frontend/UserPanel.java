@@ -184,7 +184,7 @@ public class UserPanel extends JPanel {
                         public void actionPerformed(ActionEvent e) {
                             String opis = JOptionPane.showInputDialog(null, "Opisz usterkę:");
                             if (opis != null && !opis.isEmpty()) {
-                                ZlecenieNaprawy zlecenie = new ZlecenieNaprawy(opis, new Date(), 1, 0.0, r.getPojazd());
+                                ZlecenieNaprawy zlecenie = new ZlecenieNaprawy(opis, new Date(), 0.0, r.getPojazd());
                                 serviceWorker.dodajZlecenie(zlecenie);
                                 r.setStatus(Status.W_NAPRAWIE);
                                 serviceRental.getRepositoryRental().save();
