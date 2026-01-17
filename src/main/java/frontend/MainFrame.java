@@ -23,6 +23,7 @@ public class MainFrame extends JFrame{
     private ServiceRental serviceRental;
 
     private UserPanel userPanel;
+    private LoginPanel loginPanel;
     private AcceptLoanPanel acceptLoanPanel;
     private AddWorkerPanel addWorkerPanel;
     private AddCar addCar;
@@ -52,7 +53,7 @@ public class MainFrame extends JFrame{
         this.serviceRental.setServiceUser(serviceUser);
         this.serviceRental.setRepositoryUser(serviceUser.getRepositoryUser());
 
-        LoginPanel loginPanel = new LoginPanel(this, serviceUser);
+        loginPanel = new LoginPanel(this, serviceUser, serviceWorker);
         userPanel = new UserPanel(this, serviceUser, serviceRental);
         RegisterPanel registerPanel = new RegisterPanel(this, serviceUser);
         AcceptLoanPanel acceptLoanPanel = new AcceptLoanPanel(this);

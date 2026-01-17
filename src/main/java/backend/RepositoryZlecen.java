@@ -15,6 +15,7 @@ public class RepositoryZlecen {
         load();
     }
 
+    @SuppressWarnings("unchecked")
     public void load() {
         File file = new File(FILE_PATH);
         if (!file.exists()) {

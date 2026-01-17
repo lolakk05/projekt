@@ -24,6 +24,12 @@ public class RepositoryUser {
                 clients.add((Klient) is.readObject());
             }
         }
+        catch(java.io.FileNotFoundException e) {
+            System.out.println("Brak pliku z użytkownikami (to normalne przy pierwszym uruchomieniu).");
+        }
+        catch(java.io.EOFException e) {
+            System.out.println("Brak pliku z użytkownikami (to normalne przy pierwszym uruchomieniu).");
+        }
         catch(Exception e) {
             e.printStackTrace();
         }

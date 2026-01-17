@@ -30,6 +30,9 @@ public class RepositoryRental {
         catch(java.io.FileNotFoundException e) {
             // File doesn't exist on first run - this is normal
         }
+        catch(java.io.EOFException e) {
+            // File is empty or corrupted - this is normal on first run
+        }
         catch(Exception e) {
             e.printStackTrace();
         }
@@ -43,7 +46,10 @@ public class RepositoryRental {
             }
         }
         catch(java.io.FileNotFoundException e) {
-            // File doesn't exist on first run - this is normal
+            System.out.println("Brak pliku z oczekującymi (to normalne przy pierwszym uruchomieniu).");
+        }
+        catch(java.io.EOFException e) {
+            System.out.println("Brak pliku z oczekującymi (to normalne przy pierwszym uruchomieniu).");
         }
         catch(Exception e) {
             e.printStackTrace();

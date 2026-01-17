@@ -21,7 +21,14 @@ public class RepositoryVehicle {
             for(int i = 0; i < rozmiar; i++){
                 this.vehicles.add((Pojazd) ois.readObject());
             }
-        }catch (Exception e){
+        }
+        catch(java.io.FileNotFoundException e) {
+            // File doesn't exist on first run - this is normal
+        }
+        catch(java.io.EOFException e) {
+            // File is empty or corrupted - this is normal on first run
+        }
+        catch (Exception e){
             e.printStackTrace();
             return new ArrayList<>();
         }

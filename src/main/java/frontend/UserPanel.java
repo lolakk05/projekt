@@ -27,7 +27,7 @@ public class UserPanel extends JPanel {
     private JPanel rentalListPanel;
 
     public void getUserData() {
-        currentClient = Session.getCurrentUser();
+        currentClient =(Klient) Session.getCurrentUser();
         if (currentClient != null) {
             nameLabel.setText("Imię: " + currentClient.getImie());
             balanceLabel.setText(String.valueOf(currentClient.getSaldo()));
@@ -105,7 +105,7 @@ public class UserPanel extends JPanel {
         rentalListPanel.removeAll();
 
         if (currentClient == null) {
-            currentClient = Session.getCurrentUser();
+            currentClient = (Klient) Session.getCurrentUser();
         }
 
         if (currentClient == null) {
@@ -127,7 +127,6 @@ public class UserPanel extends JPanel {
                 JButton btnDetails = new JButton("Zwróć");
                 btnDetails.addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
-                        serviceRental.returnRental(r);
                         serviceRental.getRepositoryRental().saveAwaiting();
                         serviceRental.getRepositoryRental().save();
                         refreshRentalList();
