@@ -98,7 +98,7 @@ public class VehicleListPanel extends JPanel {
                 btnReturn.addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
                         mainFrame.setVehicle(p);
-                        mainFrame.ChangeCard("RENT");
+                        mainFrame.ChangeCard("VEHICLE");
                     }
                 });
                 row.add(btnReturn, BorderLayout.EAST);
