@@ -9,9 +9,11 @@ import java.util.ArrayList;
 
 public class ServiceVehicle {
     private static RepositoryVehicle repositoryVehicle;
+    private StatsControler statsControler;
 
     public ServiceVehicle(StatsControler statsControler) {
         this.repositoryVehicle = new RepositoryVehicle(statsControler);
+        this.statsControler = statsControler;
     }
 
     public static void czyPuste(String[] lista) throws Exception {

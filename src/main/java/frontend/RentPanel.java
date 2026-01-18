@@ -46,7 +46,7 @@ public class RentPanel extends JPanel {
         JButton returnButton = new JButton("Powrót");
         returnButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                mainFrame.ChangeCard("MAIN");
+                mainFrame.ChangeCard("RENT");
             }
         });
 

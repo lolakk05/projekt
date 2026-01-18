@@ -35,13 +35,16 @@ public class RepositoryVehicle {
             e.printStackTrace();
             return new ArrayList<>();
         }
+        zaladujStatsy();
+        return vehicles;
+    }
 
-        for(Pojazd vehicle : vehicles){
-            if(vehicle.getStatus().equals("wolny")){
-                statsControler.update(vehicle,1);
+    public void zaladujStatsy(){
+        for(Pojazd p: vehicles){
+            if(p.getStatus().equals("wolny")){
+                statsControler.update(p,1);
             }
         }
-        return vehicles;
     }
 
     public void save() {
@@ -67,6 +70,7 @@ public class RepositoryVehicle {
 
     public void delete(Pojazd vehicle) {
         vehicles.remove(vehicle);
+        statsControler.update(vehicle,-1);
         save();
     }
 

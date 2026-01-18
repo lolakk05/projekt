@@ -76,6 +76,10 @@ public class UserPanel extends JPanel {
         rentButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 mainFrame.ChangeCard("RENT");
+                int[] tab = statsControler.getStats();
+                for(int i = 0; i < tab.length; i++){
+                    System.out.println(tab[i]);
+                }
             }
         });
 
@@ -100,12 +104,6 @@ public class UserPanel extends JPanel {
         menuPanel.setPreferredSize(new Dimension(800, 100));
 
         add(menuPanel, BorderLayout.NORTH);
-
-        statsPanel = new JPanel();
-
-        statsPanel.add(new JLabel("NIGGA"));
-        statsPanel.setLayout(new FlowLayout());
-        add(statsPanel);
 
         rentalListPanel = new JPanel();
         rentalListPanel.setLayout(new BoxLayout(rentalListPanel, BoxLayout.Y_AXIS));
@@ -228,24 +226,4 @@ public class UserPanel extends JPanel {
         rentalListPanel.revalidate();
         rentalListPanel.repaint();
     }
-
-//    public void refreshStatsPanel(){
-//        statsPanel.removeAll();
-//        int[] stats = statsControler.getStats();
-//
-//        JLabel carStatsLabel = new JLabel("Dostępne auta: "+stats[0]);
-//        JLabel motorStatsLabel = new JLabel("Dostępne motocykle: "+stats[1]);
-//        JLabel tirStatsLabel = new JLabel("Dostępne ciężarówki: "+stats[2]);
-//        JLabel scooterStatsLabel = new JLabel("Dostępne hulajnogi: "+stats[3]);
-//        JLabel bikeStatsLabel = new JLabel("Dostępne rowery: "+stats[4]);
-//
-//        statsPanel.add(carStatsLabel);
-//        statsPanel.add(motorStatsLabel);
-//        statsPanel.add(tirStatsLabel);
-//        statsPanel.add(scooterStatsLabel);
-//        statsPanel.add(bikeStatsLabel);
-//
-//        revalidate();
-//        repaint();
-//    }
 }

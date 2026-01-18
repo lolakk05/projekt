@@ -19,6 +19,7 @@ public class MainFrame extends JFrame{
     private ServiceVehicle serviceVehicle;
     private ServiceWorker serviceWorker;
     private ServiceRental serviceRental;
+    private RepositoryVehicle repositoryVehicle;
 
     private UserPanel userPanel;
     private LoginPanel loginPanel;
@@ -34,7 +35,7 @@ public class MainFrame extends JFrame{
     private ServiceWorkerPanel serviceWorkerPanel;
     private RemoveVehiclePanel removeVehiclePanel;
 
-    private StatsControler statsControler;
+    private StatsControler statsControler = new StatsControler();
 
     public MainFrame() {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -49,12 +50,12 @@ public class MainFrame extends JFrame{
         this.serviceVehicle = new ServiceVehicle(statsControler);
         this.serviceWorker = new ServiceWorker();
         this.serviceRental = new ServiceRental();
-        this.statsControler = new StatsControler();
         this.serviceRental.setServiceVehicle(serviceVehicle);
         this.serviceRental.setRepositoryVehicle(serviceVehicle.getRepositoryVehicle());
         this.serviceRental.setServiceUser(serviceUser);
         this.serviceRental.setRepositoryUser(serviceUser.getRepositoryUser());
         this.serviceWorker.setRepositoryRental(serviceRental.getRepositoryRental());
+        this.repositoryVehicle = serviceVehicle.getRepositoryVehicle();
 
         loginPanel = new LoginPanel(this, serviceUser, serviceWorker);
         userPanel = new UserPanel(this, serviceUser, serviceRental, serviceWorker, serviceVehicle, statsControler);
@@ -66,7 +67,7 @@ public class MainFrame extends JFrame{
         AddTir addTirPanel = new AddTir(this, serviceVehicle);
         AddScooter addScooterPanel = new AddScooter(this, serviceVehicle);
         AddBike addBikePanel = new AddBike(this, serviceVehicle);
-        vehicleListPanel = new VehicleListPanel(this, serviceVehicle);
+        vehicleListPanel = new VehicleListPanel(this, serviceVehicle, statsControler);
         rentPanel = new RentPanel(this, serviceVehicle, serviceRental, statsControler);
         removeVehiclePanel = new RemoveVehiclePanel(this, serviceVehicle);
         serviceWorkerPanel = new ServiceWorkerPanel(this, serviceWorker);
@@ -115,6 +116,9 @@ public class MainFrame extends JFrame{
         }
         if (cardName.equals("ACCEPT_LOAN")) {
             acceptLoanPanel.refreshList();
+        }
+        if(cardName.equals("RENT")){
+            vehicleListPanel.refreshStatsPanel();
         }
 
         layout.show(mainContainer, cardName);

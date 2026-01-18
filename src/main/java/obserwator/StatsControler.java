@@ -28,7 +28,7 @@ public class StatsControler implements Observer{
             setNumMotors(getNumMotors() + d);
             stats[1] = getNumMotors();
         } else if(vehicle instanceof Ciezarowka){
-            setNumBikes(getNumTir() + d);
+            setNumTir(getNumTir() + d);
             stats[2] = getNumTir();
         } else if(vehicle instanceof HulajnogaElektryczna){
             setNumScooters(getNumScooters() + d);
