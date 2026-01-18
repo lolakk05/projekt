@@ -108,7 +108,7 @@ public class ServiceRental {
     public void returnRental(Wypozyczenie rental) {
         int result = JOptionPane.showConfirmDialog(null, "Potwierdzenie zwrotu pojazdu, zostanie zwrócone: " + rental.getKosztKoncowy() * 0.9 + " PLN", "Potwierdzenie zwrotu pojazdu", JOptionPane.OK_CANCEL_OPTION);
         if (result == JOptionPane.OK_OPTION) {
-            rental.getPojazd().setStatus("wolny");
+            ServiceVehicle.zwolnijPojazd(rental.getPojazd());
             rental.getKlient().setSaldo(rental.getKosztKoncowy() * 0.9);
             rental.setStatus(Status.ZAKONCZONE);
             serviceUser.clientSaveData();

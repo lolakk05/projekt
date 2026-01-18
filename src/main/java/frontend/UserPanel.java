@@ -1,9 +1,6 @@
 package frontend;
 
-import backend.ServiceRental;
-import backend.ServiceUser;
-import backend.ServiceWorker;
-import backend.Session;
+import backend.*;
 import osoba.Klient;
 import pojazd.Pojazd;
 import wypozyczenie.Status;
@@ -25,6 +22,7 @@ public class UserPanel extends JPanel {
     private ServiceRental serviceRental;
     private ServiceWorker serviceWorker;
     private Klient currentClient;
+    private ServiceVehicle serviceVehicle;
 
     private JLabel nameLabel;
     private JLabel balanceLabel;
@@ -39,11 +37,12 @@ public class UserPanel extends JPanel {
         }
     }
 
-    public UserPanel(MainFrame mainFrame, ServiceUser serviceUser, ServiceRental serviceRental, ServiceWorker serviceWorker) {
+    public UserPanel(MainFrame mainFrame, ServiceUser serviceUser, ServiceRental serviceRental, ServiceWorker serviceWorker, ServiceVehicle serviceVehicle) {
         this.mainFrame = mainFrame;
         this.serviceUser = serviceUser;
         this.serviceRental = serviceRental;
         this.serviceWorker = serviceWorker;
+        this.serviceVehicle = serviceVehicle;
         
         setLayout(new BorderLayout());
         
@@ -173,6 +172,7 @@ public class UserPanel extends JPanel {
                         public void actionPerformed(ActionEvent e) {
                             serviceRental.returnRental(r);
                             serviceRental.getRepositoryRental().save();
+                            serviceVehicle.zwolnijPojazd(r.getPojazd());
                             refreshRentalList();
                         }
                     });
