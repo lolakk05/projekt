@@ -21,6 +21,10 @@ public class ServiceVehicle {
         }
     }
 
+    public static void zwolnijPojazd(Pojazd p){
+        repositoryVehicle.changeStatus(p,"wolny");
+    }
+
     public static void removeVehicle(Pojazd p) {
         repositoryVehicle.delete(p);
     }

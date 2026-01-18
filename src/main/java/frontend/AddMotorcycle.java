@@ -205,7 +205,8 @@ public class AddMotorcycle extends JPanel {
                 typ.setText(null);
                 checkBox.setSelected(false);
 
-                mainFrame.ChangeCard("ADD_VEHICLE_PANEL");
+                JOptionPane.showMessageDialog(null, "Pojazd dodany pomyślnie!");
+                mainFrame.ChangeCard("ADD_MOTORCYCLE");
                 repaint();
                 revalidate();
             }

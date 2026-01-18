@@ -204,7 +204,8 @@ public class AddTir extends JPanel {
                 ladownosc.setText(null);
                 iloscOsi.setText(null);
 
-                mainFrame.ChangeCard("ADD_VEHICLE_PANEL");
+                JOptionPane.showMessageDialog(null, "Pojazd dodany pomyślnie!");
+                mainFrame.ChangeCard("ADD_TIR");
 
                 repaint();
                 revalidate();

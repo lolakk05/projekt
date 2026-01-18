@@ -184,7 +184,8 @@ public class AddScooter extends JPanel {
                 zasiegKm.setText(null);
                 maxPredkosc.setText(null);
 
-                mainFrame.ChangeCard("ADD_VEHICLE_PANEL");
+                JOptionPane.showMessageDialog(null, "Pojazd dodany pomyślnie!");
+                mainFrame.ChangeCard("ADD_SCOOTER");
                 repaint();
                 revalidate();
             }

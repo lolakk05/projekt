@@ -179,7 +179,8 @@ public class AddBike extends JPanel {
                 rozmiarKol.setText(null);
                 typ.setText(null);
 
-                mainFrame.ChangeCard("ADD_VEHICLE_PANEL");
+                JOptionPane.showMessageDialog(null, "Pojazd dodany pomyślnie!");
+                mainFrame.ChangeCard("ADD_BIKE");
                 repaint();
                 revalidate();
             }

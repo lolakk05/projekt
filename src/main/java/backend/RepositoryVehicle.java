@@ -59,4 +59,9 @@ public class RepositoryVehicle {
         vehicles.remove(vehicle);
         save();
     }
+
+    public void changeStatus(Pojazd vehicle, String status){
+        vehicle.setStatus(status);
+        save();
+    }
 }

@@ -203,7 +203,8 @@ public class AddCar extends JPanel {
                 nadwozie.setText(null);
                 iloscDrzwi.setText(null);
 
-                mainFrame.ChangeCard("ADD_VEHICLE_PANEL");
+                JOptionPane.showMessageDialog(null, "Pojazd dodany pomyślnie!");
+                mainFrame.ChangeCard("ADD_CAR");
                 repaint();
                 revalidate();
             }

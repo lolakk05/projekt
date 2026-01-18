@@ -54,7 +54,7 @@ public class MainFrame extends JFrame{
         this.serviceWorker.setRepositoryRental(serviceRental.getRepositoryRental());
 
         loginPanel = new LoginPanel(this, serviceUser, serviceWorker);
-        userPanel = new UserPanel(this, serviceUser, serviceRental, serviceWorker);
+        userPanel = new UserPanel(this, serviceUser, serviceRental, serviceWorker, serviceVehicle);
         RegisterPanel registerPanel = new RegisterPanel(this, serviceUser);
         acceptLoanPanel = new AcceptLoanPanel(this, serviceRental);
         AddWorkerPanel addWorkerPanel = new AddWorkerPanel(this, serviceWorker);
