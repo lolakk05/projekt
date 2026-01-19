@@ -2,6 +2,7 @@ package frontend;
 
 import backend.ServiceRental;
 import backend.ServiceVehicle;
+import obserwator.StatsControler;
 import pojazd.Pojazd;
 import strategia.StrategiaDobowa;
 
@@ -20,6 +21,7 @@ public class RentPanel extends JPanel {
     private MainFrame mainFrame;
     private ServiceVehicle serviceVehicle;
     private ServiceRental serviceRental;
+    private StatsControler statsControler;
 
     private Pojazd currentVehicle;
 
@@ -32,10 +34,11 @@ public class RentPanel extends JPanel {
     private JLabel priceLabel = new JLabel();
 
 
-    public RentPanel(MainFrame mainFrame, ServiceVehicle serviceVehicle, ServiceRental serviceRental) {
+    public RentPanel(MainFrame mainFrame, ServiceVehicle serviceVehicle, ServiceRental serviceRental, StatsControler statsControler) {
         this.mainFrame = mainFrame;
         this.serviceVehicle= serviceVehicle;
         this.serviceRental = serviceRental;
+        this.statsControler = statsControler;
 
         setLayout(new BorderLayout());
 
@@ -179,6 +182,7 @@ public class RentPanel extends JPanel {
         if(serviceRental.rent(currentVehicle, dateStartFormatted, dateEndFormatted, serviceRental.getLastStrategy())) {
             serviceRental.clearCalculation();
             priceLabel.setText("");
+            statsControler.update(currentVehicle,-1);
             
             mainFrame.ChangeCard("RENT");
         };

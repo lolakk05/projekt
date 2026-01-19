@@ -1,5 +1,6 @@
 package backend;
 
+import obserwator.StatsControler;
 import pojazd.Pojazd;
 
 import java.io.*;
@@ -7,9 +8,11 @@ import java.util.ArrayList;
 
 public class RepositoryVehicle {
     private ArrayList<Pojazd> vehicles;
+    private StatsControler statsControler;
 
-    public RepositoryVehicle() {
+    public RepositoryVehicle(StatsControler statsControler) {
         this.vehicles = new ArrayList<>();
+        this.statsControler = statsControler;
 
         load();
     }
@@ -32,7 +35,16 @@ public class RepositoryVehicle {
             e.printStackTrace();
             return new ArrayList<>();
         }
+        zaladujStatsy();
         return vehicles;
+    }
+
+    public void zaladujStatsy(){
+        for(Pojazd p: vehicles){
+            if(p.getStatus().equals("wolny")){
+                statsControler.update(p,1);
+            }
+        }
     }
 
     public void save() {
@@ -52,11 +64,13 @@ public class RepositoryVehicle {
 
     public void upload(Pojazd vehicle) {
         vehicles.add(vehicle);
+        statsControler.update(vehicle,1);
         save();
     }
 
     public void delete(Pojazd vehicle) {
         vehicles.remove(vehicle);
+        statsControler.update(vehicle,-1);
         save();
     }
 

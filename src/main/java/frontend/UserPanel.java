@@ -1,6 +1,7 @@
 package frontend;
 
 import backend.*;
+import obserwator.StatsControler;
 import osoba.Klient;
 import pojazd.Pojazd;
 import wypozyczenie.Status;
@@ -23,6 +24,7 @@ public class UserPanel extends JPanel {
     private ServiceWorker serviceWorker;
     private Klient currentClient;
     private ServiceVehicle serviceVehicle;
+    private StatsControler statsControler;
 
     private JLabel balanceLabel;
 
@@ -33,6 +35,7 @@ public class UserPanel extends JPanel {
     private JComboBox<String> statusFilter;
     private String currentSortOrder = "date_desc"; 
 
+    private JPanel statsPanel;
 
     public void getUserData() {
         currentClient =(Klient) Session.getCurrentUser();
@@ -42,12 +45,13 @@ public class UserPanel extends JPanel {
         }
     }
 
-    public UserPanel(MainFrame mainFrame, ServiceUser serviceUser, ServiceRental serviceRental, ServiceWorker serviceWorker, ServiceVehicle serviceVehicle) {
+    public UserPanel(MainFrame mainFrame, ServiceUser serviceUser, ServiceRental serviceRental, ServiceWorker serviceWorker, ServiceVehicle serviceVehicle, StatsControler statsControler) {
         this.mainFrame = mainFrame;
         this.serviceUser = serviceUser;
         this.serviceRental = serviceRental;
         this.serviceWorker = serviceWorker;
         this.serviceVehicle = serviceVehicle;
+        this.statsControler = statsControler;
         
         setLayout(new BorderLayout());
         
@@ -69,6 +73,7 @@ public class UserPanel extends JPanel {
                 currentClient.setSaldo(sum);
                 getUserData();
                 serviceUser.clientSaveData();
+                balanceField.setText(null);
             }
         });
 
@@ -76,6 +81,10 @@ public class UserPanel extends JPanel {
         rentButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 mainFrame.ChangeCard("RENT");
+                int[] tab = statsControler.getStats();
+                for(int i = 0; i < tab.length; i++){
+                    System.out.println(tab[i]);
+                }
             }
         });
 
@@ -249,6 +258,7 @@ public class UserPanel extends JPanel {
                             serviceRental.cancelRental(r);
                             serviceRental.getRepositoryRental().save();
                             serviceVehicle.zwolnijPojazd(r.getPojazd());
+                            statsControler.update(r.getPojazd(),1);
                             refreshRentalList();
                         }
                     });
@@ -263,6 +273,7 @@ public class UserPanel extends JPanel {
                             serviceRental.returnRental(r);
                             serviceRental.getRepositoryRental().save();
                             serviceVehicle.zwolnijPojazd(r.getPojazd());
+                            statsControler.update(r.getPojazd(),1);
                             refreshRentalList();
                         }
                     });

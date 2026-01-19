@@ -1,6 +1,7 @@
 package backend;
 
 
+import obserwator.StatsControler;
 import pojazd.*;
 
 import javax.swing.*;
@@ -8,9 +9,11 @@ import java.util.ArrayList;
 
 public class ServiceVehicle {
     private static RepositoryVehicle repositoryVehicle;
+    private StatsControler statsControler;
 
-    public ServiceVehicle() {
-        this.repositoryVehicle = new RepositoryVehicle();
+    public ServiceVehicle(StatsControler statsControler) {
+        this.repositoryVehicle = new RepositoryVehicle(statsControler);
+        this.statsControler = statsControler;
     }
 
     public static void czyPuste(String[] lista) throws Exception {
@@ -63,6 +66,7 @@ public class ServiceVehicle {
                     bike[0], bike[1], int_rokProdukcji, bike[3], d_waga, d_cena, "wolny",
                     bike[6], int_rozmiarKol, bike[8]
             ));
+
 
         } catch(Exception ex) {
             throw new RuntimeException(ex);

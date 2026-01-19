@@ -3,6 +3,7 @@ package frontend;
 import backend.RepositoryWorker;
 import backend.ServiceVehicle;
 import backend.Session;
+import obserwator.StatsControler;
 import osoba.Klient;
 import pojazd.Pojazd;
 import wypozyczenie.Status;
@@ -18,11 +19,14 @@ public class VehicleListPanel extends JPanel {
     private MainFrame mainFrame;
     private ServiceVehicle serviceVehicle;
     private JPanel vehicleListPanel;
+    private StatsControler statsControler;
 
     private Klient currentClient;
     
     private JTextField searchField;
     private String currentSortOrder = "name_asc";
+    private JLabel nameLabel;
+    private JPanel statsPanel;
 
     public void getClientData() {
         if (Session.getCurrentUser() instanceof Klient) {
@@ -41,9 +45,10 @@ public class VehicleListPanel extends JPanel {
         return count;
     }
 
-    public VehicleListPanel(MainFrame mainFrame, ServiceVehicle serviceVehicle) {
+    public VehicleListPanel(MainFrame mainFrame, ServiceVehicle serviceVehicle, StatsControler statsControler) {
         this.mainFrame = mainFrame;
         this.serviceVehicle = serviceVehicle;
+        this.statsControler = statsControler;
 
         setLayout(new BorderLayout());
 
@@ -69,6 +74,16 @@ public class VehicleListPanel extends JPanel {
         
         topPanel.add(titlePanel, BorderLayout.WEST);
         topPanel.add(backButton, BorderLayout.EAST);
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.setLayout(new FlowLayout());
+        buttonPanel.add(backButton);
+        topPanel.add(buttonPanel, BorderLayout.EAST);
+
+        statsPanel = new JPanel();
+        statsPanel.setLayout(new GridLayout(1,5,5,5));
+
+        refreshStatsPanel();
+        topPanel.add(statsPanel, BorderLayout.SOUTH);
         add(topPanel, BorderLayout.NORTH);
 
         JPanel filterPanel = new JPanel();
@@ -180,4 +195,24 @@ public class VehicleListPanel extends JPanel {
         vehicleListPanel.revalidate();
         vehicleListPanel.repaint();
     }
-};
+
+    public void refreshStatsPanel(){
+        statsPanel.removeAll();
+        int[] stats = statsControler.getStats();
+
+        JLabel carStatsLabel = new JLabel("Dostępne auta: "+stats[0]);
+        JLabel motorStatsLabel = new JLabel("Dostępne motocykle: "+stats[1]);
+        JLabel tirStatsLabel = new JLabel("Dostępne ciężarówki: "+stats[2]);
+        JLabel scooterStatsLabel = new JLabel("Dostępne hulajnogi: "+stats[3]);
+        JLabel bikeStatsLabel = new JLabel("Dostępne rowery: "+stats[4]);
+
+        statsPanel.add(carStatsLabel);
+        statsPanel.add(motorStatsLabel);
+        statsPanel.add(tirStatsLabel);
+        statsPanel.add(scooterStatsLabel);
+        statsPanel.add(bikeStatsLabel);
+
+        revalidate();
+        repaint();
+    }
+}
