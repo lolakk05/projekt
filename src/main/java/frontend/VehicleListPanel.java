@@ -9,6 +9,7 @@ import pojazd.Pojazd;
 import wypozyczenie.Status;
 
 import javax.swing.*;
+import javax.swing.border.TitledBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -65,7 +66,7 @@ public class VehicleListPanel extends JPanel {
         titlePanel.add(titleLabel);
 
         JButton backButton = new JButton("Powrót");
-        backButton.setFont(new Font("SansSerif", Font.PLAIN, 12));
+        backButton.setFont(new Font("SansSerif", Font.BOLD, 12));
         backButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 mainFrame.ChangeCard("USER");
@@ -78,6 +79,10 @@ public class VehicleListPanel extends JPanel {
         buttonPanel.setLayout(new FlowLayout());
         buttonPanel.add(backButton);
         topPanel.add(buttonPanel, BorderLayout.EAST);
+        topPanel.setBorder(BorderFactory.createCompoundBorder(
+                BorderFactory.createMatteBorder(0, 0, 1, 0, Color.LIGHT_GRAY),
+                BorderFactory.createEmptyBorder(10, 15, 10, 15)
+        ));
 
         statsPanel = new JPanel();
         statsPanel.setLayout(new GridLayout(1,5,5,5));
@@ -200,17 +205,34 @@ public class VehicleListPanel extends JPanel {
         statsPanel.removeAll();
         int[] stats = statsControler.getStats();
 
+        JPanel carStatsPanel = new JPanel();
         JLabel carStatsLabel = new JLabel("Dostępne auta: "+stats[0]);
+        carStatsPanel.add(carStatsLabel);
+        carStatsPanel.setBorder(BorderFactory.createCompoundBorder());
+        JPanel motorStatsPanel = new JPanel();
         JLabel motorStatsLabel = new JLabel("Dostępne motocykle: "+stats[1]);
+        motorStatsPanel.add(motorStatsLabel);
+        motorStatsPanel.setBorder(BorderFactory.createCompoundBorder());
+        JPanel tirStatsPanel = new JPanel();
         JLabel tirStatsLabel = new JLabel("Dostępne ciężarówki: "+stats[2]);
+        tirStatsPanel.add(tirStatsLabel);
+        tirStatsPanel.setBorder(BorderFactory.createCompoundBorder());
+        JPanel scooterStatsPanel = new JPanel();
         JLabel scooterStatsLabel = new JLabel("Dostępne hulajnogi: "+stats[3]);
+        scooterStatsPanel.add(scooterStatsLabel);
+        scooterStatsLabel.setBorder(BorderFactory.createCompoundBorder());
+        JPanel bikeStatsPanel = new JPanel();
         JLabel bikeStatsLabel = new JLabel("Dostępne rowery: "+stats[4]);
+        bikeStatsPanel.add(bikeStatsLabel);
+        bikeStatsPanel.setBorder(BorderFactory.createCompoundBorder());
 
-        statsPanel.add(carStatsLabel);
-        statsPanel.add(motorStatsLabel);
-        statsPanel.add(tirStatsLabel);
-        statsPanel.add(scooterStatsLabel);
-        statsPanel.add(bikeStatsLabel);
+
+
+        statsPanel.add(carStatsPanel);
+        statsPanel.add(motorStatsPanel);
+        statsPanel.add(tirStatsPanel);
+        statsPanel.add(scooterStatsPanel);
+        statsPanel.add(bikeStatsPanel);
 
         revalidate();
         repaint();
